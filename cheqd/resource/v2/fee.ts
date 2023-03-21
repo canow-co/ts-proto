@@ -11,7 +11,7 @@ export interface FeeParams {
   /**
    * Fixed fee for creating a resource with media type 'image/*'
    *
-   * Default: 10 CHEQ or 10000000000ncheq
+   * Default: 10 ARX or 10000000000zarx
    */
   image:
     | Coin
@@ -19,7 +19,7 @@ export interface FeeParams {
   /**
    * Fixed fee for creating a resource with media type 'application/json'
    *
-   * Default: 2.5 CHEQ or 2500000000ncheq
+   * Default: 2.5 ARX or 2500000000zarx
    */
   json:
     | Coin
@@ -27,7 +27,7 @@ export interface FeeParams {
   /**
    * Fixed fee for creating a resource with all other media types
    *
-   * Default: 5 CHEQ or 5000000000ncheq
+   * Default: 5 ARX or 5000000000zarx
    */
   default:
     | Coin

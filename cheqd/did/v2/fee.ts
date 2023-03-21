@@ -8,7 +8,7 @@ export interface FeeParams {
   /**
    * Fixed fee for creating a DID
    *
-   * Default: 50 CHEQ or 50000000000ncheq
+   * Default: 50 ARX or 50000000000zarx
    */
   createDid:
     | Coin
@@ -16,7 +16,7 @@ export interface FeeParams {
   /**
    * Fixed fee for updating a DID
    *
-   * Default: 25 CHEQ or 25000000000ncheq
+   * Default: 25 ARX or 25000000000zarx
    */
   updateDid:
     | Coin
@@ -24,7 +24,7 @@ export interface FeeParams {
   /**
    * Fixed fee for deactivating a DID
    *
-   * Default: 10 CHEQ or 10000000000ncheq
+   * Default: 10 ARX or 10000000000zarx
    */
   deactivateDid:
     | Coin

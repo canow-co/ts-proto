@@ -32,19 +32,19 @@ export const DidDoc = {
             VerificationMethod.encode(v, writer.uint32(34).fork()).ldelim();
         }
         for (const v of message.authentication) {
-            writer.uint32(42).string(v);
+            VerificationRelationship.encode(v, writer.uint32(42).fork()).ldelim();
         }
         for (const v of message.assertionMethod) {
-            writer.uint32(50).string(v);
+            VerificationRelationship.encode(v, writer.uint32(50).fork()).ldelim();
         }
         for (const v of message.capabilityInvocation) {
-            writer.uint32(58).string(v);
+            VerificationRelationship.encode(v, writer.uint32(58).fork()).ldelim();
         }
         for (const v of message.capabilityDelegation) {
-            writer.uint32(66).string(v);
+            VerificationRelationship.encode(v, writer.uint32(66).fork()).ldelim();
         }
         for (const v of message.keyAgreement) {
-            writer.uint32(74).string(v);
+            VerificationRelationship.encode(v, writer.uint32(74).fork()).ldelim();
         }
         for (const v of message.service) {
             Service.encode(v, writer.uint32(82).fork()).ldelim();
@@ -74,19 +74,19 @@ export const DidDoc = {
                     message.verificationMethod.push(VerificationMethod.decode(reader, reader.uint32()));
                     break;
                 case 5:
-                    message.authentication.push(reader.string());
+                    message.authentication.push(VerificationRelationship.decode(reader, reader.uint32()));
                     break;
                 case 6:
-                    message.assertionMethod.push(reader.string());
+                    message.assertionMethod.push(VerificationRelationship.decode(reader, reader.uint32()));
                     break;
                 case 7:
-                    message.capabilityInvocation.push(reader.string());
+                    message.capabilityInvocation.push(VerificationRelationship.decode(reader, reader.uint32()));
                     break;
                 case 8:
-                    message.capabilityDelegation.push(reader.string());
+                    message.capabilityDelegation.push(VerificationRelationship.decode(reader, reader.uint32()));
                     break;
                 case 9:
-                    message.keyAgreement.push(reader.string());
+                    message.keyAgreement.push(VerificationRelationship.decode(reader, reader.uint32()));
                     break;
                 case 10:
                     message.service.push(Service.decode(reader, reader.uint32()));
@@ -109,15 +109,21 @@ export const DidDoc = {
             verificationMethod: Array.isArray(object?.verificationMethod)
                 ? object.verificationMethod.map((e) => VerificationMethod.fromJSON(e))
                 : [],
-            authentication: Array.isArray(object?.authentication) ? object.authentication.map((e) => String(e)) : [],
-            assertionMethod: Array.isArray(object?.assertionMethod) ? object.assertionMethod.map((e) => String(e)) : [],
+            authentication: Array.isArray(object?.authentication)
+                ? object.authentication.map((e) => VerificationRelationship.fromJSON(e))
+                : [],
+            assertionMethod: Array.isArray(object?.assertionMethod)
+                ? object.assertionMethod.map((e) => VerificationRelationship.fromJSON(e))
+                : [],
             capabilityInvocation: Array.isArray(object?.capabilityInvocation)
-                ? object.capabilityInvocation.map((e) => String(e))
+                ? object.capabilityInvocation.map((e) => VerificationRelationship.fromJSON(e))
                 : [],
             capabilityDelegation: Array.isArray(object?.capabilityDelegation)
-                ? object.capabilityDelegation.map((e) => String(e))
+                ? object.capabilityDelegation.map((e) => VerificationRelationship.fromJSON(e))
                 : [],
-            keyAgreement: Array.isArray(object?.keyAgreement) ? object.keyAgreement.map((e) => String(e)) : [],
+            keyAgreement: Array.isArray(object?.keyAgreement)
+                ? object.keyAgreement.map((e) => VerificationRelationship.fromJSON(e))
+                : [],
             service: Array.isArray(object?.service) ? object.service.map((e) => Service.fromJSON(e)) : [],
             alsoKnownAs: Array.isArray(object?.alsoKnownAs) ? object.alsoKnownAs.map((e) => String(e)) : [],
         };
@@ -144,31 +150,31 @@ export const DidDoc = {
             obj.verificationMethod = [];
         }
         if (message.authentication) {
-            obj.authentication = message.authentication.map((e) => e);
+            obj.authentication = message.authentication.map((e) => e ? VerificationRelationship.toJSON(e) : undefined);
         }
         else {
             obj.authentication = [];
         }
         if (message.assertionMethod) {
-            obj.assertionMethod = message.assertionMethod.map((e) => e);
+            obj.assertionMethod = message.assertionMethod.map((e) => e ? VerificationRelationship.toJSON(e) : undefined);
         }
         else {
             obj.assertionMethod = [];
         }
         if (message.capabilityInvocation) {
-            obj.capabilityInvocation = message.capabilityInvocation.map((e) => e);
+            obj.capabilityInvocation = message.capabilityInvocation.map((e) => e ? VerificationRelationship.toJSON(e) : undefined);
         }
         else {
             obj.capabilityInvocation = [];
         }
         if (message.capabilityDelegation) {
-            obj.capabilityDelegation = message.capabilityDelegation.map((e) => e);
+            obj.capabilityDelegation = message.capabilityDelegation.map((e) => e ? VerificationRelationship.toJSON(e) : undefined);
         }
         else {
             obj.capabilityDelegation = [];
         }
         if (message.keyAgreement) {
-            obj.keyAgreement = message.keyAgreement.map((e) => e);
+            obj.keyAgreement = message.keyAgreement.map((e) => e ? VerificationRelationship.toJSON(e) : undefined);
         }
         else {
             obj.keyAgreement = [];
@@ -196,11 +202,13 @@ export const DidDoc = {
         message.id = object.id ?? "";
         message.controller = object.controller?.map((e) => e) || [];
         message.verificationMethod = object.verificationMethod?.map((e) => VerificationMethod.fromPartial(e)) || [];
-        message.authentication = object.authentication?.map((e) => e) || [];
-        message.assertionMethod = object.assertionMethod?.map((e) => e) || [];
-        message.capabilityInvocation = object.capabilityInvocation?.map((e) => e) || [];
-        message.capabilityDelegation = object.capabilityDelegation?.map((e) => e) || [];
-        message.keyAgreement = object.keyAgreement?.map((e) => e) || [];
+        message.authentication = object.authentication?.map((e) => VerificationRelationship.fromPartial(e)) || [];
+        message.assertionMethod = object.assertionMethod?.map((e) => VerificationRelationship.fromPartial(e)) || [];
+        message.capabilityInvocation = object.capabilityInvocation?.map((e) => VerificationRelationship.fromPartial(e)) ||
+            [];
+        message.capabilityDelegation = object.capabilityDelegation?.map((e) => VerificationRelationship.fromPartial(e)) ||
+            [];
+        message.keyAgreement = object.keyAgreement?.map((e) => VerificationRelationship.fromPartial(e)) || [];
         message.service = object.service?.map((e) => Service.fromPartial(e)) || [];
         message.alsoKnownAs = object.alsoKnownAs?.map((e) => e) || [];
         return message;
@@ -279,8 +287,69 @@ export const VerificationMethod = {
         return message;
     },
 };
+function createBaseVerificationRelationship() {
+    return { verificationMethodId: "", verificationMethod: undefined };
+}
+export const VerificationRelationship = {
+    encode(message, writer = _m0.Writer.create()) {
+        if (message.verificationMethodId !== "") {
+            writer.uint32(10).string(message.verificationMethodId);
+        }
+        if (message.verificationMethod !== undefined) {
+            VerificationMethod.encode(message.verificationMethod, writer.uint32(18).fork()).ldelim();
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseVerificationRelationship();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.verificationMethodId = reader.string();
+                    break;
+                case 2:
+                    message.verificationMethod = VerificationMethod.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON(object) {
+        return {
+            verificationMethodId: isSet(object.verificationMethodId) ? String(object.verificationMethodId) : "",
+            verificationMethod: isSet(object.verificationMethod)
+                ? VerificationMethod.fromJSON(object.verificationMethod)
+                : undefined,
+        };
+    },
+    toJSON(message) {
+        const obj = {};
+        message.verificationMethodId !== undefined && (obj.verificationMethodId = message.verificationMethodId);
+        message.verificationMethod !== undefined && (obj.verificationMethod = message.verificationMethod
+            ? VerificationMethod.toJSON(message.verificationMethod)
+            : undefined);
+        return obj;
+    },
+    create(base) {
+        return VerificationRelationship.fromPartial(base ?? {});
+    },
+    fromPartial(object) {
+        const message = createBaseVerificationRelationship();
+        message.verificationMethodId = object.verificationMethodId ?? "";
+        message.verificationMethod = (object.verificationMethod !== undefined && object.verificationMethod !== null)
+            ? VerificationMethod.fromPartial(object.verificationMethod)
+            : undefined;
+        return message;
+    },
+};
 function createBaseService() {
-    return { id: "", serviceType: "", serviceEndpoint: [] };
+    return { id: "", serviceType: "", serviceEndpoint: [], accept: [], routingKeys: [] };
 }
 export const Service = {
     encode(message, writer = _m0.Writer.create()) {
@@ -292,6 +361,12 @@ export const Service = {
         }
         for (const v of message.serviceEndpoint) {
             writer.uint32(26).string(v);
+        }
+        for (const v of message.accept) {
+            writer.uint32(34).string(v);
+        }
+        for (const v of message.routingKeys) {
+            writer.uint32(42).string(v);
         }
         return writer;
     },
@@ -311,6 +386,12 @@ export const Service = {
                 case 3:
                     message.serviceEndpoint.push(reader.string());
                     break;
+                case 4:
+                    message.accept.push(reader.string());
+                    break;
+                case 5:
+                    message.routingKeys.push(reader.string());
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -323,6 +404,8 @@ export const Service = {
             id: isSet(object.id) ? String(object.id) : "",
             serviceType: isSet(object.serviceType) ? String(object.serviceType) : "",
             serviceEndpoint: Array.isArray(object?.serviceEndpoint) ? object.serviceEndpoint.map((e) => String(e)) : [],
+            accept: Array.isArray(object?.accept) ? object.accept.map((e) => String(e)) : [],
+            routingKeys: Array.isArray(object?.routingKeys) ? object.routingKeys.map((e) => String(e)) : [],
         };
     },
     toJSON(message) {
@@ -335,6 +418,18 @@ export const Service = {
         else {
             obj.serviceEndpoint = [];
         }
+        if (message.accept) {
+            obj.accept = message.accept.map((e) => e);
+        }
+        else {
+            obj.accept = [];
+        }
+        if (message.routingKeys) {
+            obj.routingKeys = message.routingKeys.map((e) => e);
+        }
+        else {
+            obj.routingKeys = [];
+        }
         return obj;
     },
     create(base) {
@@ -345,6 +440,8 @@ export const Service = {
         message.id = object.id ?? "";
         message.serviceType = object.serviceType ?? "";
         message.serviceEndpoint = object.serviceEndpoint?.map((e) => e) || [];
+        message.accept = object.accept?.map((e) => e) || [];
+        message.routingKeys = object.routingKeys?.map((e) => e) || [];
         return message;
     },
 };

@@ -1,4 +1,4 @@
-import _m0 from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal.js";
 export declare enum ScalarType {
     SCALAR_TYPE_UNSPECIFIED = 0,
     SCALAR_TYPE_STRING = 1,
@@ -61,20 +61,27 @@ export declare const InterfaceDescriptor: {
     decode(input: _m0.Reader | Uint8Array, length?: number): InterfaceDescriptor;
     fromJSON(object: any): InterfaceDescriptor;
     toJSON(message: InterfaceDescriptor): unknown;
-    fromPartial<I extends {
+    create<I extends {
         name?: string | undefined;
         description?: string | undefined;
     } & {
         name?: string | undefined;
         description?: string | undefined;
-    } & { [K in Exclude<keyof I, keyof InterfaceDescriptor>]: never; }>(object: I): InterfaceDescriptor;
+    } & { [K in Exclude<keyof I, keyof InterfaceDescriptor>]: never; }>(base?: I | undefined): InterfaceDescriptor;
+    fromPartial<I_1 extends {
+        name?: string | undefined;
+        description?: string | undefined;
+    } & {
+        name?: string | undefined;
+        description?: string | undefined;
+    } & { [K_1 in Exclude<keyof I_1, keyof InterfaceDescriptor>]: never; }>(object: I_1): InterfaceDescriptor;
 };
 export declare const ScalarDescriptor: {
     encode(message: ScalarDescriptor, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): ScalarDescriptor;
     fromJSON(object: any): ScalarDescriptor;
     toJSON(message: ScalarDescriptor): unknown;
-    fromPartial<I extends {
+    create<I extends {
         name?: string | undefined;
         description?: string | undefined;
         fieldType?: ScalarType[] | undefined;
@@ -82,6 +89,15 @@ export declare const ScalarDescriptor: {
         name?: string | undefined;
         description?: string | undefined;
         fieldType?: (ScalarType[] & ScalarType[] & { [K in Exclude<keyof I["fieldType"], keyof ScalarType[]>]: never; }) | undefined;
-    } & { [K_1 in Exclude<keyof I, keyof ScalarDescriptor>]: never; }>(object: I): ScalarDescriptor;
+    } & { [K_1 in Exclude<keyof I, keyof ScalarDescriptor>]: never; }>(base?: I | undefined): ScalarDescriptor;
+    fromPartial<I_1 extends {
+        name?: string | undefined;
+        description?: string | undefined;
+        fieldType?: ScalarType[] | undefined;
+    } & {
+        name?: string | undefined;
+        description?: string | undefined;
+        fieldType?: (ScalarType[] & ScalarType[] & { [K_2 in Exclude<keyof I_1["fieldType"], keyof ScalarType[]>]: never; }) | undefined;
+    } & { [K_3 in Exclude<keyof I_1, keyof ScalarDescriptor>]: never; }>(object: I_1): ScalarDescriptor;
 };
 //# sourceMappingURL=cosmos.d.ts.map

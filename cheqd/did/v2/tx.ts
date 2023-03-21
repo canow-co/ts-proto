@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal.js";
-import { DidDocWithMetadata, Service, VerificationMethod } from "./diddoc.js";
+import { DidDocWithMetadata, Service, VerificationMethod, VerificationRelationship } from "./diddoc.js";
 
 /**
  * MsgCreateDidDoc defines the Msg/CreateDidDoc request type.
@@ -59,7 +59,7 @@ export interface MsgCreateDidDocPayload {
   context: string[];
   /**
    * id is the DID of the DID document.
-   * Format: did:cheqd:<namespace>:<unique-identifier>
+   * Format: did:canow:<namespace>:<unique-identifier>
    */
   id: string;
   /** controller is a list of DIDs that are allowed to control the DID document. */
@@ -80,27 +80,27 @@ export interface MsgCreateDidDocPayload {
    * authentication is a list of verification methods that can be used to
    * authenticate as the DID subject.
    */
-  authentication: string[];
+  authentication: VerificationRelationship[];
   /**
    * assertionMethod is a list of verification methods that can be used to
    * assert statements as the DID subject.
    */
-  assertionMethod: string[];
+  assertionMethod: VerificationRelationship[];
   /**
    * capabilityInvocation is a list of verification methods that can be used to
    * invoke capabilities as the DID subject.
    */
-  capabilityInvocation: string[];
+  capabilityInvocation: VerificationRelationship[];
   /**
    * capabilityDelegation is a list of verification methods that can be used to
    * delegate capabilities as the DID subject.
    */
-  capabilityDelegation: string[];
+  capabilityDelegation: VerificationRelationship[];
   /**
    * keyAgreement is a list of verification methods that can be used to perform
    * key agreement as the DID subject.
    */
-  keyAgreement: string[];
+  keyAgreement: VerificationRelationship[];
   /**
    * service is a list of services that can be used to interact with the DID subject.
    * Documentation: https://www.w3.org/TR/did-core/#services
@@ -136,7 +136,7 @@ export interface MsgUpdateDidDocPayload {
   context: string[];
   /**
    * id is the DID of the DID document.
-   * Format: did:cheqd:<namespace>:<unique-identifier>
+   * Format: did:canow:<namespace>:<unique-identifier>
    */
   id: string;
   /** controller is a list of DIDs that are allowed to control the DID document. */
@@ -157,27 +157,27 @@ export interface MsgUpdateDidDocPayload {
    * authentication is a list of verification methods that can be used to
    * authenticate as the DID subject.
    */
-  authentication: string[];
+  authentication: VerificationRelationship[];
   /**
    * assertionMethod is a list of verification methods that can be used to
    * assert statements as the DID subject.
    */
-  assertionMethod: string[];
+  assertionMethod: VerificationRelationship[];
   /**
    * capabilityInvocation is a list of verification methods that can be used to
    * invoke capabilities as the DID subject.
    */
-  capabilityInvocation: string[];
+  capabilityInvocation: VerificationRelationship[];
   /**
    * capabilityDelegation is a list of verification methods that can be used to
    * delegate capabilities as the DID subject.
    */
-  capabilityDelegation: string[];
+  capabilityDelegation: VerificationRelationship[];
   /**
    * keyAgreement is a list of verification methods that can be used to perform
    * key agreement as the DID subject.
    */
-  keyAgreement: string[];
+  keyAgreement: VerificationRelationship[];
   /**
    * service is a list of services that can be used to interact with the DID subject.
    * Documentation: https://www.w3.org/TR/did-core/#services
@@ -523,19 +523,19 @@ export const MsgCreateDidDocPayload = {
       VerificationMethod.encode(v!, writer.uint32(34).fork()).ldelim();
     }
     for (const v of message.authentication) {
-      writer.uint32(42).string(v!);
+      VerificationRelationship.encode(v!, writer.uint32(42).fork()).ldelim();
     }
     for (const v of message.assertionMethod) {
-      writer.uint32(50).string(v!);
+      VerificationRelationship.encode(v!, writer.uint32(50).fork()).ldelim();
     }
     for (const v of message.capabilityInvocation) {
-      writer.uint32(58).string(v!);
+      VerificationRelationship.encode(v!, writer.uint32(58).fork()).ldelim();
     }
     for (const v of message.capabilityDelegation) {
-      writer.uint32(66).string(v!);
+      VerificationRelationship.encode(v!, writer.uint32(66).fork()).ldelim();
     }
     for (const v of message.keyAgreement) {
-      writer.uint32(74).string(v!);
+      VerificationRelationship.encode(v!, writer.uint32(74).fork()).ldelim();
     }
     for (const v of message.service) {
       Service.encode(v!, writer.uint32(82).fork()).ldelim();
@@ -569,19 +569,19 @@ export const MsgCreateDidDocPayload = {
           message.verificationMethod.push(VerificationMethod.decode(reader, reader.uint32()));
           break;
         case 5:
-          message.authentication.push(reader.string());
+          message.authentication.push(VerificationRelationship.decode(reader, reader.uint32()));
           break;
         case 6:
-          message.assertionMethod.push(reader.string());
+          message.assertionMethod.push(VerificationRelationship.decode(reader, reader.uint32()));
           break;
         case 7:
-          message.capabilityInvocation.push(reader.string());
+          message.capabilityInvocation.push(VerificationRelationship.decode(reader, reader.uint32()));
           break;
         case 8:
-          message.capabilityDelegation.push(reader.string());
+          message.capabilityDelegation.push(VerificationRelationship.decode(reader, reader.uint32()));
           break;
         case 9:
-          message.keyAgreement.push(reader.string());
+          message.keyAgreement.push(VerificationRelationship.decode(reader, reader.uint32()));
           break;
         case 10:
           message.service.push(Service.decode(reader, reader.uint32()));
@@ -608,16 +608,24 @@ export const MsgCreateDidDocPayload = {
       verificationMethod: Array.isArray(object?.verificationMethod)
         ? object.verificationMethod.map((e: any) => VerificationMethod.fromJSON(e))
         : [],
-      authentication: Array.isArray(object?.authentication) ? object.authentication.map((e: any) => String(e)) : [],
-      assertionMethod: Array.isArray(object?.assertionMethod) ? object.assertionMethod.map((e: any) => String(e)) : [],
+      authentication: Array.isArray(object?.authentication)
+        ? object.authentication.map((e: any) => VerificationRelationship.fromJSON(e))
+        : [],
+      assertionMethod: Array.isArray(object?.assertionMethod)
+        ? object.assertionMethod.map((e: any) => VerificationRelationship.fromJSON(e))
+        : [],
       capabilityInvocation: Array.isArray(object?.capabilityInvocation)
-        ? object.capabilityInvocation.map((e: any) => String(e))
+        ? object.capabilityInvocation.map((e: any) => VerificationRelationship.fromJSON(e))
         : [],
       capabilityDelegation: Array.isArray(object?.capabilityDelegation)
-        ? object.capabilityDelegation.map((e: any) => String(e))
+        ? object.capabilityDelegation.map((e: any) => VerificationRelationship.fromJSON(e))
         : [],
-      keyAgreement: Array.isArray(object?.keyAgreement) ? object.keyAgreement.map((e: any) => String(e)) : [],
-      service: Array.isArray(object?.service) ? object.service.map((e: any) => Service.fromJSON(e)) : [],
+      keyAgreement: Array.isArray(object?.keyAgreement)
+        ? object.keyAgreement.map((e: any) => VerificationRelationship.fromJSON(e))
+        : [],
+      service: Array.isArray(object?.service)
+        ? object.service.map((e: any) => Service.fromJSON(e))
+        : [],
       alsoKnownAs: Array.isArray(object?.alsoKnownAs) ? object.alsoKnownAs.map((e: any) => String(e)) : [],
       versionId: isSet(object.versionId) ? String(object.versionId) : "",
     };
@@ -642,27 +650,31 @@ export const MsgCreateDidDocPayload = {
       obj.verificationMethod = [];
     }
     if (message.authentication) {
-      obj.authentication = message.authentication.map((e) => e);
+      obj.authentication = message.authentication.map((e) => e ? VerificationRelationship.toJSON(e) : undefined);
     } else {
       obj.authentication = [];
     }
     if (message.assertionMethod) {
-      obj.assertionMethod = message.assertionMethod.map((e) => e);
+      obj.assertionMethod = message.assertionMethod.map((e) => e ? VerificationRelationship.toJSON(e) : undefined);
     } else {
       obj.assertionMethod = [];
     }
     if (message.capabilityInvocation) {
-      obj.capabilityInvocation = message.capabilityInvocation.map((e) => e);
+      obj.capabilityInvocation = message.capabilityInvocation.map((e) =>
+        e ? VerificationRelationship.toJSON(e) : undefined
+      );
     } else {
       obj.capabilityInvocation = [];
     }
     if (message.capabilityDelegation) {
-      obj.capabilityDelegation = message.capabilityDelegation.map((e) => e);
+      obj.capabilityDelegation = message.capabilityDelegation.map((e) =>
+        e ? VerificationRelationship.toJSON(e) : undefined
+      );
     } else {
       obj.capabilityDelegation = [];
     }
     if (message.keyAgreement) {
-      obj.keyAgreement = message.keyAgreement.map((e) => e);
+      obj.keyAgreement = message.keyAgreement.map((e) => e ? VerificationRelationship.toJSON(e) : undefined);
     } else {
       obj.keyAgreement = [];
     }
@@ -690,11 +702,13 @@ export const MsgCreateDidDocPayload = {
     message.id = object.id ?? "";
     message.controller = object.controller?.map((e) => e) || [];
     message.verificationMethod = object.verificationMethod?.map((e) => VerificationMethod.fromPartial(e)) || [];
-    message.authentication = object.authentication?.map((e) => e) || [];
-    message.assertionMethod = object.assertionMethod?.map((e) => e) || [];
-    message.capabilityInvocation = object.capabilityInvocation?.map((e) => e) || [];
-    message.capabilityDelegation = object.capabilityDelegation?.map((e) => e) || [];
-    message.keyAgreement = object.keyAgreement?.map((e) => e) || [];
+    message.authentication = object.authentication?.map((e) => VerificationRelationship.fromPartial(e)) || [];
+    message.assertionMethod = object.assertionMethod?.map((e) => VerificationRelationship.fromPartial(e)) || [];
+    message.capabilityInvocation = object.capabilityInvocation?.map((e) => VerificationRelationship.fromPartial(e)) ||
+      [];
+    message.capabilityDelegation = object.capabilityDelegation?.map((e) => VerificationRelationship.fromPartial(e)) ||
+      [];
+    message.keyAgreement = object.keyAgreement?.map((e) => VerificationRelationship.fromPartial(e)) || [];
     message.service = object.service?.map((e) => Service.fromPartial(e)) || [];
     message.alsoKnownAs = object.alsoKnownAs?.map((e) => e) || [];
     message.versionId = object.versionId ?? "";
@@ -787,19 +801,19 @@ export const MsgUpdateDidDocPayload = {
       VerificationMethod.encode(v!, writer.uint32(34).fork()).ldelim();
     }
     for (const v of message.authentication) {
-      writer.uint32(42).string(v!);
+      VerificationRelationship.encode(v!, writer.uint32(42).fork()).ldelim();
     }
     for (const v of message.assertionMethod) {
-      writer.uint32(50).string(v!);
+      VerificationRelationship.encode(v!, writer.uint32(50).fork()).ldelim();
     }
     for (const v of message.capabilityInvocation) {
-      writer.uint32(58).string(v!);
+      VerificationRelationship.encode(v!, writer.uint32(58).fork()).ldelim();
     }
     for (const v of message.capabilityDelegation) {
-      writer.uint32(66).string(v!);
+      VerificationRelationship.encode(v!, writer.uint32(66).fork()).ldelim();
     }
     for (const v of message.keyAgreement) {
-      writer.uint32(74).string(v!);
+      VerificationRelationship.encode(v!, writer.uint32(74).fork()).ldelim();
     }
     for (const v of message.service) {
       Service.encode(v!, writer.uint32(82).fork()).ldelim();
@@ -833,19 +847,19 @@ export const MsgUpdateDidDocPayload = {
           message.verificationMethod.push(VerificationMethod.decode(reader, reader.uint32()));
           break;
         case 5:
-          message.authentication.push(reader.string());
+          message.authentication.push(VerificationRelationship.decode(reader, reader.uint32()));
           break;
         case 6:
-          message.assertionMethod.push(reader.string());
+          message.assertionMethod.push(VerificationRelationship.decode(reader, reader.uint32()));
           break;
         case 7:
-          message.capabilityInvocation.push(reader.string());
+          message.capabilityInvocation.push(VerificationRelationship.decode(reader, reader.uint32()));
           break;
         case 8:
-          message.capabilityDelegation.push(reader.string());
+          message.capabilityDelegation.push(VerificationRelationship.decode(reader, reader.uint32()));
           break;
         case 9:
-          message.keyAgreement.push(reader.string());
+          message.keyAgreement.push(VerificationRelationship.decode(reader, reader.uint32()));
           break;
         case 10:
           message.service.push(Service.decode(reader, reader.uint32()));
@@ -872,16 +886,24 @@ export const MsgUpdateDidDocPayload = {
       verificationMethod: Array.isArray(object?.verificationMethod)
         ? object.verificationMethod.map((e: any) => VerificationMethod.fromJSON(e))
         : [],
-      authentication: Array.isArray(object?.authentication) ? object.authentication.map((e: any) => String(e)) : [],
-      assertionMethod: Array.isArray(object?.assertionMethod) ? object.assertionMethod.map((e: any) => String(e)) : [],
+      authentication: Array.isArray(object?.authentication)
+        ? object.authentication.map((e: any) => VerificationRelationship.fromJSON(e))
+        : [],
+      assertionMethod: Array.isArray(object?.assertionMethod)
+        ? object.assertionMethod.map((e: any) => VerificationRelationship.fromJSON(e))
+        : [],
       capabilityInvocation: Array.isArray(object?.capabilityInvocation)
-        ? object.capabilityInvocation.map((e: any) => String(e))
+        ? object.capabilityInvocation.map((e: any) => VerificationRelationship.fromJSON(e))
         : [],
       capabilityDelegation: Array.isArray(object?.capabilityDelegation)
-        ? object.capabilityDelegation.map((e: any) => String(e))
+        ? object.capabilityDelegation.map((e: any) => VerificationRelationship.fromJSON(e))
         : [],
-      keyAgreement: Array.isArray(object?.keyAgreement) ? object.keyAgreement.map((e: any) => String(e)) : [],
-      service: Array.isArray(object?.service) ? object.service.map((e: any) => Service.fromJSON(e)) : [],
+      keyAgreement: Array.isArray(object?.keyAgreement)
+        ? object.keyAgreement.map((e: any) => VerificationRelationship.fromJSON(e))
+        : [],
+      service: Array.isArray(object?.service)
+        ? object.service.map((e: any) => Service.fromJSON(e))
+        : [],
       alsoKnownAs: Array.isArray(object?.alsoKnownAs) ? object.alsoKnownAs.map((e: any) => String(e)) : [],
       versionId: isSet(object.versionId) ? String(object.versionId) : "",
     };
@@ -906,27 +928,31 @@ export const MsgUpdateDidDocPayload = {
       obj.verificationMethod = [];
     }
     if (message.authentication) {
-      obj.authentication = message.authentication.map((e) => e);
+      obj.authentication = message.authentication.map((e) => e ? VerificationRelationship.toJSON(e) : undefined);
     } else {
       obj.authentication = [];
     }
     if (message.assertionMethod) {
-      obj.assertionMethod = message.assertionMethod.map((e) => e);
+      obj.assertionMethod = message.assertionMethod.map((e) => e ? VerificationRelationship.toJSON(e) : undefined);
     } else {
       obj.assertionMethod = [];
     }
     if (message.capabilityInvocation) {
-      obj.capabilityInvocation = message.capabilityInvocation.map((e) => e);
+      obj.capabilityInvocation = message.capabilityInvocation.map((e) =>
+        e ? VerificationRelationship.toJSON(e) : undefined
+      );
     } else {
       obj.capabilityInvocation = [];
     }
     if (message.capabilityDelegation) {
-      obj.capabilityDelegation = message.capabilityDelegation.map((e) => e);
+      obj.capabilityDelegation = message.capabilityDelegation.map((e) =>
+        e ? VerificationRelationship.toJSON(e) : undefined
+      );
     } else {
       obj.capabilityDelegation = [];
     }
     if (message.keyAgreement) {
-      obj.keyAgreement = message.keyAgreement.map((e) => e);
+      obj.keyAgreement = message.keyAgreement.map((e) => e ? VerificationRelationship.toJSON(e) : undefined);
     } else {
       obj.keyAgreement = [];
     }
@@ -954,11 +980,13 @@ export const MsgUpdateDidDocPayload = {
     message.id = object.id ?? "";
     message.controller = object.controller?.map((e) => e) || [];
     message.verificationMethod = object.verificationMethod?.map((e) => VerificationMethod.fromPartial(e)) || [];
-    message.authentication = object.authentication?.map((e) => e) || [];
-    message.assertionMethod = object.assertionMethod?.map((e) => e) || [];
-    message.capabilityInvocation = object.capabilityInvocation?.map((e) => e) || [];
-    message.capabilityDelegation = object.capabilityDelegation?.map((e) => e) || [];
-    message.keyAgreement = object.keyAgreement?.map((e) => e) || [];
+    message.authentication = object.authentication?.map((e) => VerificationRelationship.fromPartial(e)) || [];
+    message.assertionMethod = object.assertionMethod?.map((e) => VerificationRelationship.fromPartial(e)) || [];
+    message.capabilityInvocation = object.capabilityInvocation?.map((e) => VerificationRelationship.fromPartial(e)) ||
+      [];
+    message.capabilityDelegation = object.capabilityDelegation?.map((e) => VerificationRelationship.fromPartial(e)) ||
+      [];
+    message.keyAgreement = object.keyAgreement?.map((e) => VerificationRelationship.fromPartial(e)) || [];
     message.service = object.service?.map((e) => Service.fromPartial(e)) || [];
     message.alsoKnownAs = object.alsoKnownAs?.map((e) => e) || [];
     message.versionId = object.versionId ?? "";

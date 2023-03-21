@@ -10,11 +10,11 @@ export interface QueryDidDocRequest {
    * DID unique identifier of the DID Document to fetch.
    * UUID-style DIDs as well as Indy-style DID are supported.
    *
-   * Format: did:cheqd:<namespace>:<unique-identifier>
+   * Format: did:canow:<namespace>:<unique-identifier>
    *
    * Examples:
-   * - did:cheqd:mainnet:c82f2b02-bdab-4dd7-b833-3e143745d612
-   * - did:cheqd:testnet:wGHEXrZvJxR8vw5P3UWH1j
+   * - did:canow:mainnet:c82f2b02-bdab-4dd7-b833-3e143745d612
+   * - did:canow:testnet:wGHEXrZvJxR8vw5P3UWH1j
    */
   id: string;
 }
@@ -35,11 +35,11 @@ export interface QueryDidDocVersionRequest {
    * DID unique identifier of the DID Document to fetch.
    * UUID-style DIDs as well as Indy-style DID are supported.
    *
-   * Format: did:cheqd:<namespace>:<unique-identifier>
+   * Format: did:canow:<namespace>:<unique-identifier>
    *
    * Examples:
-   * - did:cheqd:mainnet:c82f2b02-bdab-4dd7-b833-3e143745d612
-   * - did:cheqd:testnet:wGHEXrZvJxR8vw5P3UWH1j
+   * - did:canow:mainnet:c82f2b02-bdab-4dd7-b833-3e143745d612
+   * - did:canow:testnet:wGHEXrZvJxR8vw5P3UWH1j
    */
   id: string;
   /**
@@ -69,11 +69,11 @@ export interface QueryAllDidDocVersionsMetadataRequest {
    * DID unique identifier of the DID Document to fetch version metadata.
    * UUID-style DIDs as well as Indy-style DID are supported.
    *
-   * Format: did:cheqd:<namespace>:<unique-identifier>
+   * Format: did:canow:<namespace>:<unique-identifier>
    *
    * Examples:
-   * - did:cheqd:mainnet:c82f2b02-bdab-4dd7-b833-3e143745d612
-   * - did:cheqd:testnet:wGHEXrZvJxR8vw5P3UWH1j
+   * - did:canow:mainnet:c82f2b02-bdab-4dd7-b833-3e143745d612
+   * - did:canow:testnet:wGHEXrZvJxR8vw5P3UWH1j
    */
   id: string;
   /** pagination defines an optional pagination for the request. */
